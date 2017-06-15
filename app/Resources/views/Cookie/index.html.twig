@@ -28,6 +28,11 @@
               </form> 
             {% endif %}
           </td>
+          <td>
+             {% if is_granted('DONATE', cookie) %} 
+               <a href="">Donate</a>
+             {% endif %} 
+          </td>
         </tr>
       {% endfor %}
     </tbody>
