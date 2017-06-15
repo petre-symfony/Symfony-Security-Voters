@@ -22,7 +22,7 @@
             {{ cookie.bakerUsername }}
           </td>
           <td>
-            {% if cookie.bakerUsername == app.user.username %}
+            {% if is_granted('NOM', cookie) %}
               <form action="{{ path('cookie_nom', {'id': cookie.id}) }}" method="POST">
                 <button type="submit" class="btn">NOM! <i class="glyphicon glyphicon-cutlery"></i></button>
               </form> 
