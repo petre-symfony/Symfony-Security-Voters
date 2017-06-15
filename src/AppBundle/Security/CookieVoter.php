@@ -2,8 +2,18 @@
 namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CookieVoter extends AbstractVoter {
+  /**
+   * @var \Symfony\Component\DependencyInjection\ContainerInterface
+   */
+  private $container;
+  
+  public function __construct(ContainerInterface $container) {
+    $this->container =$container;
+  }
+
   protected function getSupportedAttributes() {
     return array('NOM');
   }
@@ -16,6 +26,13 @@ class CookieVoter extends AbstractVoter {
     if(!is_object($user)){
       return false;
     } 
+    
+    //in Symfony 2.5 - $this->container->get('security.context')
+    $authChecker = $this->container->get('security.authorization_checker');
+    
+    if ($authChecker->isGranted('ROLE_COOKIE_MONSTER')){
+      return true;
+    }
     
     if($object->getBakerUsername() == $user->getUsername()){
       return true;
