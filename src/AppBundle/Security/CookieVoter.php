@@ -15,7 +15,7 @@ class CookieVoter extends AbstractVoter {
   }
 
   protected function getSupportedAttributes() {
-    return array('NOM');
+    return array('NOM', 'DONATE');
   }
 
   protected function getSupportedClasses() {
@@ -30,15 +30,26 @@ class CookieVoter extends AbstractVoter {
     //in Symfony 2.5 - $this->container->get('security.context')
     $authChecker = $this->container->get('security.authorization_checker');
     
-    if ($authChecker->isGranted('ROLE_COOKIE_MONSTER')){
-      return true;
-    }
-    
-    if($object->getBakerUsername() == $user->getUsername()){
-      return true;
+    switch($attribute){
+      case 'NOM':
+        if ($authChecker->isGranted('ROLE_COOKIE_MONSTER')){
+          return true;
+        }
+
+        if($object->getBakerUsername() == $user->getUsername()){
+          return true;
+        }
+
+        return false;
+      case 'DONATE':
+        if(strpos($object->getFlavor(), 'Chocolate') === false){
+          return true;
+        }
+        return false;
     }
     
     return false;
+    
   }
 
 }
