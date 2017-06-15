@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Security\CookieVoter;
 
 class CookieController extends Controller {
   /**
@@ -37,7 +38,7 @@ class CookieController extends Controller {
     
     //isGranted() in 2.6
     //$this->get('security.context')->isGranted
-    if(!$this->isGranted('NOM', $cookie)) {
+    if(!$this->isGranted(CookieVoter::ATTRIBUTE_NOM, $cookie)) {
       throw $this->createAccessDeniedException('Hands off my cookie!');
     }
 

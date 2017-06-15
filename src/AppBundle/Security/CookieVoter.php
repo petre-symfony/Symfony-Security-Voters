@@ -5,6 +5,9 @@ use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class CookieVoter extends AbstractVoter {
+  const ATTRIBUTE_NOM = 'NOM';
+  const ATTRIBUTE_DONATE = 'DONATE';
+  
   /**
    * @var \Symfony\Component\DependencyInjection\ContainerInterface
    */
@@ -15,7 +18,7 @@ class CookieVoter extends AbstractVoter {
   }
 
   protected function getSupportedAttributes() {
-    return array('NOM', 'DONATE');
+    return array(self::ATTRIBUTE_NOM, self::ATTRIBUTE_DONATE);
   }
 
   protected function getSupportedClasses() {
@@ -31,7 +34,7 @@ class CookieVoter extends AbstractVoter {
     $authChecker = $this->container->get('security.authorization_checker');
     
     switch($attribute){
-      case 'NOM':
+      case self::ATTRIBUTE_NOM:
         if ($authChecker->isGranted('ROLE_COOKIE_MONSTER')){
           return true;
         }
@@ -41,7 +44,7 @@ class CookieVoter extends AbstractVoter {
         }
 
         return false;
-      case 'DONATE':
+      case self::ATTRIBUTE_DONATE:
         if(strpos($object->getFlavor(), 'Chocolate') === false){
           return true;
         }
