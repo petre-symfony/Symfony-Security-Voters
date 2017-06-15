@@ -1,1 +1,5 @@
-# put something here...
+services:
+  app.cookie_voter:
+    class: AppBundle\Security\CookieVoter
+    tags:
+      - { name: security.voter }
