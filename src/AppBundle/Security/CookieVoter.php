@@ -48,7 +48,7 @@ class CookieVoter extends AbstractVoter {
         return false;
     }
     
-    return false;
+    throw new \LogicException('How did we get here!?');
     
   }
 
