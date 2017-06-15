@@ -27,11 +27,16 @@ class CookieController extends Controller {
    */
   public function nomAction(Request $request, $id) {
     $em = $this->getDoctrine()->getManager();
+    
     $cookie = $em->getRepository('AppBundle:DeliciousCookie')
       ->find($id);
-
+    
     if (!$cookie) {
       throw $this->createNotFoundException();
+    }
+    
+    if($cookie->getBakerUsername() != $this->getUser()->getUsername()){
+      throw $this->createAccessDeniedException('You didn\'t baked this!');
     }
 
     $em->remove($cookie);
