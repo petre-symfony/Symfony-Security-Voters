@@ -13,7 +13,15 @@ class CookieVoter extends AbstractVoter {
   }
 
   protected function isGranted($attribute, $object, $user = null) {
-    var_dump($attribute, $object, $user);die;  
+    if(!is_object($user)){
+      return false;
+    } 
+    
+    if($object->getBakerUsername() == $user->getUsername()){
+      return true;
+    }
+    
+    return false;
   }
 
 }
