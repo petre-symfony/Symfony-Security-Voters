@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Security\CookieVoter;
+namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authorization\Voter\AbstractVoter;
 
@@ -16,5 +16,4 @@ class CookieVoter extends AbstractVoter {
     
   }
 
-//put your code here
 }

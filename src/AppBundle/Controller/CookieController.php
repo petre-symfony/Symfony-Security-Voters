@@ -35,8 +35,10 @@ class CookieController extends Controller {
       throw $this->createNotFoundException();
     }
     
-    if($cookie->getBakerUsername() != $this->getUser()->getUsername()){
-      throw $this->createAccessDeniedException('You didn\'t baked this!');
+    //isGranted() in 2.6
+    //$this->get('security.context')->isGranted
+    if(!$this->isGranted('NOM', $cookie)) {
+      throw $this->createAccessDeniedException('Hands off my cookie!');
     }
 
     $em->remove($cookie);
